@@ -1,2 +1,2 @@
-# DataSciencePython
-data analysis tasks using python
+# WebScrapingPython
+Some web scraping tasks using python's library BeautifulSoup
