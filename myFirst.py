@@ -1,10 +1,12 @@
-import requests
 from bs4 import BeautifulSoup
+import requests
 
-url = "https://www.gazetadopovo.com.br/curitiba/escolas-municipais-de-curitiba-ja-foram-alvo-de-275-episodios-de-violencia-em-2018-6r7imnmxot3som8b3dkbp377e"
+url = "https://noticias.r7.com/sao-paulo/socos-pontapes-e-assedio-como-professores-enfrentam-a-violencia-06072018"
+request = requests.get(url)
 
-r = requests.get(url)
+soup = BeautifulSoup(request.content, 'lxml')
 
-soup = BeautifulSoup(r.content)
+articles = soup.find_all("article", {"class", "content"})
 
-print(soup.prettify())
+for article in articles:
+    print(article.find_all("p")[0].text)
