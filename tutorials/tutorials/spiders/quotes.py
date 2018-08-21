@@ -6,8 +6,15 @@ class QuotesSpider(scrapy.Spider):
     name = "quotes"
     allowed_domains = ["toscrape.com"]
     start_urls = (
-        'http://quotes.toscrape.com/random',
+        'http://quotes.toscrape.com',
     )
 
     def parse(self, response):
         self.log('I just visited: ' + response.url)
+        for quote in response.css('div.quote'):
+            item = {
+                'author_name': quote.css('small.author::text').extract(),
+                'text': quote.css('span.text::text').extract_first().strip(u'\u201c\u201d\u00e9'),
+                'tags': quote.css('a.tag::text').extract(),
+            }
+            yield item
